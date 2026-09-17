@@ -1,0 +1,42 @@
+# ---- 虚拟环境 ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Python 字节码 / 构建产物 ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- 测试 / 类型检查 / lint 缓存 ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# ---- PyCharm / JetBrains ----
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- 日志 / 本地配置 / 密钥 ----
+*.log
+.env
+.env.*
+!.env.example
