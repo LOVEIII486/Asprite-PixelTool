@@ -1,41 +1,27 @@
-# ---- 虚拟环境 ----
-.venv/
-venv/
-env/
-ENV/
-
-# ---- Python 字节码 / 构建产物 ----
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+# ---- 打包产物 ----
 build/
 dist/
-*.egg-info/
-.eggs/
+*.aseprite-extension
 
-# ---- 测试 / 类型检查 / lint 缓存 ----
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-.coverage.*
-htmlcov/
-.tox/
+# ---- Aseprite 自动备份 / 临时文件 ----
+*.ase~
+*.aseprite~
+*.aseprite.bak
+*.bak
 
-# ---- PyCharm / JetBrains ----
+# ---- IDE / 编辑器 ----
 .idea/
 *.iml
 *.iws
 *.ipr
-
-# ---- 编辑器 / 系统 ----
 .vscode/
+
+# ---- 系统 ----
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# ---- 日志 / 本地配置 / 密钥 ----
+# ---- 本地配置 / 日志 ----
 *.log
 .env
 .env.*
