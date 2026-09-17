@@ -1,0 +1,24 @@
+{
+  "name": "asprite-pixeltool",
+  "displayName": "PixelTool",
+  "description": "Pixel-art toolkit for Aseprite: timeline selection helpers, frame export and palette utilities.",
+  "version": "0.1.0",
+  "author": {
+    "name": "LOVE 486",
+    "url": "https://github.com/LOVEIII486"
+  },
+  "license": "MIT",
+  "main": "main.lua",
+  "contributes": {
+    "commands": [
+      {
+        "id": "PixelToolExportSelection",
+        "title": "PixelTool: Export Selected Frames..."
+      },
+      {
+        "id": "PixelToolDumpPalette",
+        "title": "PixelTool: Dump Palette to JSON..."
+      }
+    ]
+  }
+}
