@@ -63,4 +63,4 @@ quickest way to confirm the extension actually loaded.
 
 ## License
 
-MIT
+Released under the [MIT License](LICENSE).
