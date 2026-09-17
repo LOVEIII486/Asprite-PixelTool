@@ -4,28 +4,41 @@ local util = require("src.util")
 
 local export = {}
 
---- Walks the timeline selection and returns the covered frame numbers.
+--- Normalises one entry of `app.range.frames` to a frame number.
 --
--- Aseprite reports a selection as one or more ranges, each carrying a start
--- and end frame. A sprite with nothing selected has an empty selection table.
+-- The API reference shows the *setter* taking plain numbers
+-- (`app.range.frames = { 1, 2, ... }`) but describes the getter only as "the
+-- array of selected frames", linking to the Frame class. Which of the two a
+-- read actually yields is not stated, so handle both.
 --
--- @param sprite Sprite
--- @return table  sorted array of 1-based frame numbers
-function export.selectedFrameNumbers(sprite)
-  local numbers = {}
-  if not sprite or not sprite.selection then
-    return numbers
+-- @param entry number|Frame
+-- @return number|nil
+local function frameNumberOf(entry)
+  if type(entry) == "number" then
+    return entry
+  end
+  return entry and entry.frameNumber
+end
+
+--- Returns the frame numbers currently selected in the timeline.
+--
+-- `app.range` is the timeline selection — distinct from `sprite.selection`,
+-- which tracks the selected *pixels* on the canvas. `isEmpty` is true when
+-- nothing is selected in the timeline.
+--
+-- @return table  sorted, de-duplicated array of frame numbers
+function export.selectedFrameNumbers()
+  local range = app.range
+  if not range or range.isEmpty then
+    return {}
   end
 
-  local seen = {}
-  for _, range in ipairs(sprite.selection) do
-    local from = range.fromFrame.frameNumber
-    local to = range.toFrame.frameNumber
-    for f = from, to do
-      if not seen[f] then
-        seen[f] = true
-        numbers[#numbers + 1] = f
-      end
+  local numbers, seen = {}, {}
+  for _, entry in ipairs(range.frames) do
+    local n = frameNumberOf(entry)
+    if n and not seen[n] then
+      seen[n] = true
+      numbers[#numbers + 1] = n
     end
   end
 
@@ -33,19 +46,25 @@ function export.selectedFrameNumbers(sprite)
   return numbers
 end
 
---- Summarises the current selection.
+--- Describes the current sprite and its timeline selection.
 -- @return string|nil
 function export.describeSelection()
-  local sprite = app.activeSprite
+  local sprite = app.sprite
   if not sprite then
     return nil
   end
 
-  local frames = export.selectedFrameNumbers(sprite)
+  -- An unsaved sprite reports an empty filename rather than nil.
+  local name = sprite.filename
+  if not name or name == "" then
+    name = "untitled"
+  end
+
+  local frames = export.selectedFrameNumbers()
   if #frames == 0 then
     return string.format(
-      "Sprite \"%s\" has %d frame(s); nothing selected in the timeline.",
-      sprite.filename or "untitled", #sprite.frames
+      'Sprite "%s" has %d frame(s); nothing selected in the timeline.',
+      name, #sprite.frames
     )
   end
 

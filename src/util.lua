@@ -8,11 +8,12 @@ function util.alert(text)
   app.alert{ title = "PixelTool", text = text }
 end
 
---- Asks the user for a destination path.
+--- Resolves a destination path for a generated file.
 --
--- TODO: swap the hard-coded temp location for a real save dialog once the
--- dialog bindings are settled — `app.fs` exposes file access but the picker
--- is only reachable through the app-level dialog API.
+-- TODO: this currently drops the file straight into the user's Documents
+-- folder. The proper version should prompt, which means building a `Dialog`
+-- and adding a `file` field to it — `app.fs` on its own only resolves paths,
+-- it has no picker.
 --
 -- @param suggestedName string
 -- @return string|nil
