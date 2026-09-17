@@ -11,7 +11,7 @@ local palette = {}
 -- @return table|nil  array of { index, r, g, b, a }, or nil when there is no
 --                    active sprite
 function palette.collect()
-  local sprite = app.activeSprite
+  local sprite = app.sprite
   if not sprite then
     return nil
   end
